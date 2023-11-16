@@ -1,153 +1,261 @@
-<style>
-h1 {text-align: center;}
-p {text-align: center;}
-a {text-align: center;}
-</style>
-
-
-<h1 style="background-color: green;">                                     Hello ! <br>  From T-Smart solution Ltd! <br> Corrected English National examinations Text Book Download pages </h1>
-<p> <br> Welcome to the E-Somo V1 download page this is an artificial intelligence-enabled application that helps the learner 
-   to smartly  learn effortlessly. <br> By using this interactive app you will get a chance of doing many national examinations by simulation,
-   with direct feedback which will help the learner to quickly gain the required knowledge and skills.  <br>   <br> 
-   Below are link for downloading the printable TextBook (English  past national  examinations Questions and answers) for Offline learning,<br> 
-  N.B   You will get a link after successful login .<br>
-        </p>
-
-
-
-
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-<meta charset="UTF-8">
-<title>JJS</title> 
-</head> 
-<body> <input type="text" placeholder="Enter name here" Id="st">  <br> <br>
- <input type="text" placeholder="Enter name here" Id="st2"> 
-
-<script> 
-
-
-function cond() { 
-var a=document.getElementById("st").value; 
-var av=document.getElementById("st2").value; 
-
-let sum = Number(a) + Number(new Date().getFullYear()) + Number(a);
-
-if(a=="112018") { 
-
- var b = document.createElement('a');
-      var linkText = document.createTextNode("ViP master link");
-      b.appendChild(linkText);
-      b.title = "my google";
-     b.href = "https://e-somo.github.io/Welcome-Page/"; 
-      document.body.appendChild(b);
-
-
-
-} 
-
-else if(av==sum ){ 
-
-
-
-  var a = document.createElement('a');
-      var linkText = document.createTextNode("Good client");
-      a.appendChild(linkText);
-      a.title = "my good ";
-      a.href = "https://e-somo.github.io/Welcome-Page/";
-      document.body.appendChild(a);
-
-
-} 
-
-
-else{ 
-
-      var a = document.createElement('a');
-      var linkText = document.createTextNode("Invalid login");
-      a.appendChild(linkText);
-      a.title = "invalid login ";
-      a.href = "https://ytettet/";
-      document.body.appendChild(linkText);
-   
-  
-
-   
-} }
-
-
-
-</script> 
-<button type="button" onclick="cond()">OK</button> <br><br> <br>
-
-
-</body> 
-</html>  
-
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-#snackbar {
-  visibility: hidden;
-  min-width: 250px;
-  margin-left: -125px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 2px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 17px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Operation</title>
+       <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
 
-#snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
+        h2 {
+            color: #0066cc;
+        }
 
-@-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;} 
-  to {bottom: 30px; opacity: 1;}
-}
+        p {
+            margin-bottom: 15px;
+        }
 
-@keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
+        strong {
+            font-weight: bold;
+        }
 
-@-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;} 
-  to {bottom: 0; opacity: 0;}
-}
+        /* Style for language buttons */
+        #language-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
 
-@keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
-}
-</style>
+        button {
+            margin-right: 5px;
+        }
+
+        /* Style for the navigation bar */
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            display: none; /* Initially hidden */
+        }
+
+        .navbar a {
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        #bars-icon {
+            cursor: pointer;
+            font-size: 24px;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 1;
+            color: white;
+        } 
+        
+         #language-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50; /* Green color */
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049; /* Darker green color on hover */
+        }
+        
+           #bars-icon {
+            cursor: pointer;
+            font-size: 24px;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 1;
+            color: #3498db; /* Blue color */
+        }
+    </style>
 </head>
 <body>
 
+<!-- Language buttons -->
+<div id="language-buttons">
+    <button onclick="changeLanguage('en')">English</button>
+    <button onclick="changeLanguage('fr')">French</button>
+    <button onclick="changeLanguage('es')">Spanish</button>
+    <button onclick="changeLanguage('de')">German</button>
+</div>
 
-<button onclick="myFunction()">Reset</button>
+<!-- Bars icon for triggering the navigation bar display -->
+<div id="bars-icon">&#9776;</div>
 
-<div id="snackbar"> Close and Go Back 
+<!-- Left-hand side navigation bar -->
+<div class="navbar" id="navbar">
+    <a href="#" onclick="showAlert('Dashboard')">Dashboard</a>
+    <a href="#" onclick="showAlert('Attendance Tracking')">Attendance Tracking</a>
+    <a href="#" onclick="showAlert('Behavior Analysis')">Behavior Analysis</a>
+    <a href="#" onclick="showAlert('Notifications')">Notifications</a>
+    <a href="#" onclick="showAlert('Monthly Reports')">Monthly Reports</a>
+    <a href="#" onclick="showAlert('Remote Monitoring')">Remote Monitoring</a>
+    <a href="#" onclick="showAlert('Settings')">Settings</a>
+</div>
 
+<!-- Content -->
+<h1>System Operation</h1>
+
+<h2>1. User Authentication and Authorization:</h2>
+<p>
+    <strong>Objective:</strong> Ensure secure access to the system and provide different levels of access based on user roles.<br>
+    <strong>Operation:</strong>
+    Users (teachers, administrators, etc.) log in to the app with their credentials.<br>
+    Different roles have different levels of access and permissions to system features.
+</p>
+
+<h2>2. Dashboard:</h2>
+<p>
+    <strong>Objective:</strong> Provide a central interface for users to access key information.<br>
+    <strong>Operation:</strong>
+    Displays a user-friendly dashboard with real-time attendance information.<br>
+    Notifies users of unusual behavior or student absences.
+</p>
+
+<h2>3. Attendance Tracking:</h2>
+<p>
+    <strong>Objective:</strong> Monitor and manage student attendance.<br>
+    <strong>Operation:</strong>
+    Displays real-time attendance data collected by the ESP32 CAM.<br>
+    Allows users to view attendance reports for individual students or entire classes.
+</p>
+
+<h2>4. Behavior Analysis:</h2>
+<p>
+    <strong>Objective:</strong> Analyze behavior patterns using machine learning algorithms and computer vision.<br>
+    <strong>Operation:</strong>
+    Utilizes machine learning algorithms for behavior pattern analysis.<br>
+    Displays behavior trends and alerts for unusual behavior.<br>
+    Allows personnel to review captured images and videos related to behavior incidents.
+</p>
+
+<h2>5. Notifications:</h2>
+<p>
+    <strong>Objective:</strong> Keep parents informed about student absences or behavior concerns in real-time.<br>
+    <strong>Operation:</strong>
+    Sends real-time SMS notifications to parents.<br>
+    Allows parents to opt for email notifications.
+</p>
+
+<h2>6. Monthly Reports:</h2>
+<p>
+    <strong>Objective:</strong> Provide detailed monthly behavior reports to parents and administrators.<br>
+    <strong>Operation:</strong>
+    Generates and emails monthly behavior reports to parents and administrators.
+</p>
+
+<h2>7. Remote Monitoring:</h2>
+<p>
+    <strong>Objective:</strong> Enable authorized personnel to remotely monitor classroom activities.<br>
+    <strong>Operation:</strong>
+    Implements remote monitoring features for authorized personnel.<br>
+    Enables the capture of images and videos for further analysis.
+</p>
+
+<h2>8. Settings:</h2>
+<p>
+    <strong>Objective:</strong> Allow customization of system preferences.<br>
+    <strong>Operation:</strong>
+    Provides settings for customization, such as notification preferences and monitoring preferences.
+</p>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-function myFunction() {
-  var x = document.getElementById("snackbar");
-  x.className = "show";
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
-</script>
+    // Default language is English
+    
+         
+         
+          document.addEventListener('DOMContentLoaded', function () {
+        const navbar = document.getElementById('navbar');
+        const barsIcon = document.getElementById('bars-icon');
+
+        barsIcon.addEventListener('mouseover', () => {
+            navbar.style.display = 'block';
+        });
+
+        navbar.addEventListener('mouseout', (event) => {
+            // Check if the mouse is actually leaving the navbar
+            if (!navbar.contains(event.relatedTarget)) {
+                navbar.style.display = 'none';
+            }
+        });
+    });
+
+   
+    
+    let currentLanguage = 'en';
+
+    // Function to change language
+    function changeLanguage(language) {
+        currentLanguage = language;
+        // Call a function to update content based on the selected language
+        updateContent();
+    }
+
+    // Function to update content based on the selected language
+    function updateContent() {
+        // Example: You may replace the content based on the current language
+        document.querySelector('h1').innerText = (currentLanguage === 'en') ? 'System Operation' :
+            (currentLanguage === 'fr') ? 'Opération du système' :
+            (currentLanguage === 'es') ? 'Operación del sistema' :
+            (currentLanguage === 'de') ? 'Systembetrieb' : 'System Operation';
+
+        // Repeat this for all other elements you want to update
+        // Example: document.querySelector('h2').innerText = ...;
+        // Example: document.querySelector('p').innerText = ...;
+    }
+
+    // JavaScript function to show SweetAlert with an image
+    function showAlert(elementName) {
+        // Replace 'path/to/your/image.jpg' with the actual path to your image
+        Swal.fire({
+            title: elementName,
+            imageUrl: 'path/to/your/image.jpg',
+            imageAlt: 'Custom image',
+            html: '<b>This is a custom Swal.fire alert for ' + elementName + '.</b>'
+        });
+    }
+
+    // Initial content update
+    updateContent();
+    
+    
+    
+</script> 
+
+
 
 </body>
 </html>
