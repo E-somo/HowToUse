@@ -1,0 +1,454 @@
+package com.Tss.MategekoyUmuhandaV3Max3;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.budiyev.android.codescanner.CodeScanner;
+import com.budiyev.android.codescanner.CodeScannerView;
+import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.zxing.Result;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import android.Manifest;
+
+
+public class  ScanningJob extends AppCompatActivity {
+    private CodeScanner mCodeScanner;
+    TextView Tv_scan;
+    String serial;
+    int sumdevice=0;
+    int longdevice;
+    int more33n = 0;
+    int hemwane = 0;
+    String devLumped="";
+    Button BringBack;
+    String nowTime="";
+    int showpin =0;
+
+    int hidebtn = 0;
+
+    CodeScannerView scannerView;
+    String myType = "";
+
+
+    String inputStream="";
+    private static final int MY_CAMERA_REQUEST_CODE = 100;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_scanning_job);
+        CodeScannerView scannerView = findViewById(R.id.scanner_view);
+
+
+        SharedPreferences sharedType = getSharedPreferences("my_preferenceType", MODE_PRIVATE);
+        myType = sharedType.getString("sharedType", "free");
+
+
+        TextView Tv_scan = findViewById(R.id.tv_textView);
+        Button BringBack = findViewById(R.id.BringBack);
+        mCodeScanner = new CodeScanner(this, scannerView);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            boolean visible = true; // Start with the view visible
+
+            @Override
+            public void run() {
+                // Toggle the visibility of the view
+                visible = !visible;
+                //  showdown.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+                // Schedule the next toggle after 1 second
+
+                //updatIt();
+                handler.postDelayed(this, 1000);
+            }
+        }, 120000); // Start the toggle after 1 second
+
+
+        String idemei = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        //clientid.setText(""+idemei);
+        // clientid.setVisibility(View.GONE);
+        // String serial=clientid.getText().toString();
+        serial = idemei;
+        for (int i = 0; i < serial.length(); i++) {
+            sumdevice += serial.charAt(i);
+        }
+        longdevice = sumdevice + 17563;
+
+        int number = longdevice;
+
+        // Convert the number to a string to get the individual digits
+        String numberString = Integer.toString(number);
+
+        // Initialize a variable to store the sum
+        int sum = 0;
+
+        // Loop through each digit and calculate the sum
+        for (int i = 0; i < numberString.length(); i++) {
+            int digit = Integer.parseInt(numberString.substring(i, i + 1)); // Get the current digit
+            sum += digit; // Add the digit to the sum
+        }
+
+        // Format the sum as a two-digit number
+        String formattedSum = String.format("%02d", sum);
+
+        devLumped = formattedSum;
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
+        }
+
+        mCodeScanner.setDecodeCallback(new DecodeCallback() {
+            @Override
+            public void onDecoded(@NonNull final Result result) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        SharedPreferences sharedBespo = getSharedPreferences("myBespoType", MODE_PRIVATE);
+                        String BespoType = sharedBespo.getString("myTypeBespo", "Free user");
+
+                        if (BespoType.equals("VIP3")) {
+
+
+                            SharedPreferences sharedExpir = getSharedPreferences("my_prefexp", MODE_PRIVATE);
+                            String expii= sharedExpir.getString("myExpire","2022-12-02 12:00:00");
+                            String dayAssigned =expii;
+                            SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Date specificDate;
+                            Date today = new Date();
+                            long timeDifference;
+                            long differenceInDays;
+                            try {
+                                specificDate = sdf3.parse(dayAssigned);
+                                timeDifference = specificDate.getTime() - today.getTime();
+                                differenceInDays = timeDifference / (1000 * 3600 * 24);
+                                if (differenceInDays < 60) {
+
+                                    //   Toast.makeText(EnterfinalkeyActivity.this, "The days are in range!", Toast.LENGTH_LONG).show();
+
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ScanningJob.this);
+                                    builder.setTitle("Mu amezi 4 yambere gusa ") // Set the title of the alert dialog
+                                            .setMessage("Guhuza App bishoboka mu mezi ane ya mbere muri abonema imwe kandi bishoboka kuri machine imwe gusa uzongera. Mukeneye gukoresha machine mugura abonema yo kuri machine burashoboka murakoze \n \n AMATEGEKO N' AMABWIRIZA BIRAKURIKIZWA  ")  // Set the message of the alert dialog
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                // Set the positive button and its click listener
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // Handle positive button click
+                                                    // You can perform any action here, e.g. dismiss the dialog, proceed with an action, etc.
+                                                }
+                                            })
+                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                // Set the negative button and its click listener
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    // Handle negative button click
+                                                    // You can perform any action here, e.g. dismiss the dialog, cancel an action, etc.
+                                                }
+                                            });
+                                    AlertDialog alertDialog = builder.create(); // Create the alert dialog
+                                    alertDialog.setCancelable(false);
+                                    alertDialog.show(); // Show the alert dialog
+
+                                } else {
+                                    //Toast.makeText(EnterfinalkeyActivity.this, "Something went wrong. Please seek help.", Toast.LENGTH_LONG).show();
+
+                                    Toast.makeText(ScanningJob.this, result.getText(), Toast.LENGTH_SHORT).show();
+
+                                    Calendar calendar = Calendar.getInstance();
+                                    Date currentDate = calendar.getTime();
+
+                                    int year = calendar.get(Calendar.YEAR);
+                                    int month = calendar.get(Calendar.MONTH) + 1; // Add 1 to get the correct month (0-11)
+                                    int date = calendar.get(Calendar.DATE);
+                                    int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+                                    String generatedString = year * 2 + "" + (month < 10 ? "0" + month : month) + "" + (date * 2) + "" + (hour * 2);
+                                    String seenbyQr = "" + result.getText();
+                                    String lastTenCharacters = seenbyQr.substring(seenbyQr.length() - 9);
+
+                                    if (seenbyQr.length() >12 & seenbyQr.length() <20 & lastTenCharacters.equals(generatedString)) {
+
+
+
+
+                                        SharedPreferences sharedBespopin = getSharedPreferences("myBespoPin", MODE_PRIVATE);
+
+                                         String  myTypeBespopin = sharedBespopin.getString("myTypeBespopin","111111");
+
+                                        SharedPreferences sharedBespokey = getSharedPreferences("myBespokey", MODE_PRIVATE);
+                                        String  myTypeBespkey =   sharedBespokey.getString("myTypeBespkey","1234567");
+
+                                        String inandroValue = myTypeBespopin;  // payee pin
+                                        String inBacktextValue = myTypeBespkey; // device id
+                                        int sumzed = 0;
+                                        int sumId = 0;
+
+                                        for (int i = 0; i < inandroValue.length(); i++) {
+                                            sumzed += Integer.parseInt(String.valueOf(inandroValue.charAt(i)));
+                                        }
+
+                                        for (int iv = 0; iv < inBacktextValue.length(); iv++) {
+                                            sumId += Integer.parseInt(String.valueOf(inBacktextValue.charAt(iv)));
+                                        }
+
+
+                                        String lastabove3 = "" + (sumzed + 333);
+
+                                        String firstbelow3 = "" + (sumzed + 333) * 2;
+                                        String lastbelow3 = "" + ((sumId * 2) + 333);
+
+
+                                        String inUp = inBacktextValue + "" + lastabove3;
+
+// Pad the input value with leading zeros if its length is not divisible by 3
+                                        int padding = 3 - (inUp.length() % 3);
+                                        if (padding != 3) {
+                                            inUp = "0".repeat(padding) + inUp;
+                                        }
+
+                                        StringBuilder separatedValue = new StringBuilder();
+                                        for (int i = 0; i < inUp.length(); i += 3) {
+                                            if (i > 0) {
+                                                separatedValue.append("-");
+                                            }
+                                            separatedValue.append(inUp.substring(i, i + 3));
+                                        }
+
+                                        System.out.println(separatedValue.toString());
+
+                                        SharedPreferences sharedPreferencesbl = getSharedPreferences("pushed", Context.MODE_PRIVATE);
+                                        String retrievedPushBlocker = sharedPreferencesbl.getString("PushedKey", "");
+
+
+
+
+                                        SharedPreferences sharedPreferences = getSharedPreferences("PrefExpir", Context.MODE_PRIVATE);
+                                        String endtime2 = sharedPreferences.getString("dayAssigned", "N/A");
+
+
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                                        try {
+                                            // Convert stored date string and current date to Date objects
+                                            Date storedDate = dateFormat.parse(endtime2);
+                                            Date currentDate2 = Calendar.getInstance().getTime();
+
+                                            // Calculate the difference in days
+                                            long differenceInMillis2 = storedDate.getTime() - currentDate2.getTime();
+                                            long differenceInDays2 = differenceInMillis2 / (24 * 60 * 60 * 1000);
+
+                                            // Print the difference in days
+                                            System.out.println("Difference in days: " + differenceInDays2);
+                                            Toast.makeText(ScanningJob.this, "days differences is "+differenceInDays2, Toast.LENGTH_LONG).show();
+
+                                            if ( differenceInDays2 < 61 ) {
+                                        hemwane = 1;
+
+                                            }
+
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        // Check if the retrieved value is "enabled"
+                                        if ("enabled".equals(retrievedPushBlocker)) {
+
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(ScanningJob.this);
+                                            builder.setTitle("Error   Not Allowed ") // Set the title of the alert dialog
+                                                    .setMessage(" Ntabwo mwemerewe Gushuza App na mashine Kubera mwigeze gukura App muri Smart phone ! Guforumata App byakuyemo amakuru ntitwamenya niba mwarigeze guhuza App nindi machine cyangwa mutarabikoze  Mutwihanganire Mukomeze mwigire kuri Smart phohone  Gusa Murakoze ! ") // Set the message of the alert dialog
+                                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                        // Set the positive button and its click listener
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            // Handle positive button click
+                                                            // You can perform any action here, e.g. dismiss the dialog, proceed with an action, etc.
+                                                        }
+                                                    });
+
+                                            AlertDialog alertDialog = builder.create(); // Create the alert dialog
+                                            alertDialog.setCancelable(false);
+                                            alertDialog.show(); // Show the alert dialog
+                                        } else  if (hemwane ==1) {
+                                            
+
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ScanningJob.this);
+                                        builder.setTitle("Bishoboka mumezi ane ya mbere ! ") // Set the title of the alert dialog
+                                                .setMessage("Guhuza App na machine bishoboka gusa mu mezi ane ya mbere kuva muguze App mategeko y umuhanda VIP3  ")  // Set the message of the alert dialog
+                                                .setPositiveButton("Murakoze", new DialogInterface.OnClickListener() {
+                                                    // Set the positive button and its click listener
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // Handle positive button click
+                                                        // You can perform any action here, e.g. dismiss the dialog, proceed with an action, etc.
+                                                    }
+                                                });
+
+                                        AlertDialog alertDialog = builder.create(); // Create the alert dialog
+                                        alertDialog.setCancelable(false);
+                                        alertDialog.show(); // Show the alert dialog
+
+                                    } else{
+
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(ScanningJob.this);
+                                            builder.setTitle("Guhuza App na Machine ") // Set the title of the alert dialog
+                                                    .setMessage("Mu kazu kabanza muri nimero ya App murashyiramo: " + separatedValue + "" +
+                                                            "\n \n \n Mu kazu gakurikira  muri PIN yo guhuza  murashyiramo: " + firstbelow3 + "" + lastbelow3)  // Set the message of the alert dialog
+                                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                        // Set the positive button and its click listener
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            // Handle positive button click
+                                                            // You can perform any action here, e.g. dismiss the dialog, proceed with an action, etc.
+                                                        }
+                                                    })
+                                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                        // Set the negative button and its click listener
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            // Handle negative button click
+                                                            // You can perform any action here, e.g. dismiss the dialog, cancel an action, etc.
+                                                        }
+                                                    });
+
+                                            AlertDialog alertDialog = builder.create(); // Create the alert dialog
+                                            alertDialog.setCancelable(false);
+                                            alertDialog.show(); // Show the alert dialog
+                                        }
+
+                                    }else {
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(ScanningJob.this);
+                                        builder.setTitle("Invalid linkaage code "+seenbyQr.length()) // Set the title of the alert dialog
+                                                .setMessage(lastTenCharacters +" comparw "+generatedString+"Dukeneye ko muhuza na system ya company yacu kuri www.solution-asap.com murakoze \n IKindi kadi Mukande Kuri HUZA NA SMART PHONE")
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    // Set the positive button and its click listener
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // Handle positive button click
+                                                        // You can perform any action here, e.g. dismiss the dialog, proceed with an action, etc.
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    // Set the negative button and its click listener
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        // Handle negative button click
+                                                        // You can perform any action here, e.g. dismiss the dialog, cancel an action, etc.
+                                                    }
+                                                });
+
+                                        AlertDialog alertDialog = builder.create(); // Create the alert dialog
+                                        alertDialog.setCancelable(false);
+                                        alertDialog.show();
+
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                        } else {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ScanningJob.this);
+                            builder.setTitle("BIKORWA NA VIP GUSA  ") // Set the title of the alert dialog
+                                    .setMessage("Mutwihanganire Ntabwo dushoboye Guhuza App yanyu na machine kubera mutaguze App mategeko y umuhanda VIP " +
+                                            " Murasabwa kugura App Mategeko y umuhanda VIP3 kugirango mwemererwe guhuza App na na machine mube mwakwigira kuri machine . Tubibutseko haba kuri Smart phone haba no kuri machine hose birashoboka kwiga mudakeneye interinete. Amahirwe masaa !")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        // Set the positive button and its click listener
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Handle positive button click
+                                            // You can perform any action here, e.g. dismiss the dialog, proceed with an action, etc.
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                        // Set the negative button and its click listener
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Handle negative button click
+                                            // You can perform any action here, e.g. dismiss the dialog, cancel an action, etc.
+                                        }
+                                    });
+
+                            AlertDialog alertDialog = builder.create(); // Create the alert dialog
+                            alertDialog.setCancelable(false);
+                            alertDialog.show(); // Show the alert dialog
+
+
+                        }
+                    }
+                });
+            }
+        });
+
+        scannerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCodeScanner.startPreview();
+            }
+        });
+
+        BringBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), Dashboard.class);
+                startActivity(intent);
+                finish();
+                finishAffinity();
+
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, do camera-related operations
+            } else {
+                // Permission denied, handle accordingly (e.g. show an error message)
+            }
+
+
+        }}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCodeScanner.startPreview();
+    }
+
+    @Override
+    protected void onPause() {
+        mCodeScanner.releaseResources();
+        super.onPause();
+    }
+
+
+
+}
